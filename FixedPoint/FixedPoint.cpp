@@ -70,7 +70,7 @@ public:
     //=====================================
     //===== Your Code goes here ===========
     //=====================================
-    return In; // This is obviously wrong
+    return Fixp<T, std::max(FracBits, FracBitsIn)> (Value + In.Value);
   }
 
   /**
@@ -89,7 +89,7 @@ public:
     //=====================================
     //===== Your Code goes here ===========
     //=====================================
-    return In; // This is obviously wrong
+    return Fixp<T, std::max(FracBits, FracBitsIn)> (Value - In.Value);
   }
 
   /**
@@ -110,7 +110,7 @@ public:
     //=====================================
     //===== Your Code goes here ===========
     //=====================================
-    return Fixp<T, FracBits + FracBitsIn>(0); // This is obviously wrong
+    return Fixp<T, FracBits + FracBitsIn> (Value * In.Value);
   }
 
   /**
