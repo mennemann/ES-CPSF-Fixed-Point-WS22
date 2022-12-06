@@ -112,7 +112,6 @@ TEST(Positive, Equal) {
   EXPECT_FALSE(A == C);
   EXPECT_FALSE(A == D);
   EXPECT_TRUE(D == C);
-  EXPECT_TRUE(false);
 }
 
 TEST(Negative, Equal) {
