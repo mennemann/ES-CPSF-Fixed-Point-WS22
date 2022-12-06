@@ -65,12 +65,13 @@ public:
    * @return Fixp
    */
   template <class TIn, TIn FracBitsIn>
-  Fixp operator+(Fixp<TIn, FracBitsIn> In) {
+  Fixp<T, std::max(FracBits, FracBitsIn)> operator+(Fixp<TIn, FracBitsIn> In) {
     assert(sizeof(T) == sizeof(TIn));
-    //=====================================
-    //===== Your Code goes here ===========
-    //=====================================
-    return Fixp<T, std::max(FracBits, FracBitsIn)> (Value + In.Value);
+    if (FracBits > FracBitsIn) {
+      return Fixp<T, std::max(FracBits, FracBitsIn)> (Value + (In.Value << FracBits - FracBitsIn));
+    } else {
+      return Fixp<T, std::max(FracBits, FracBitsIn)> ((Value << FracBits - FracBitsIn) + In.Value);
+    }
   }
 
   /**
@@ -84,12 +85,13 @@ public:
    * @return Fixp
    */
   template <class TIn, TIn FracBitsIn>
-  Fixp operator-(Fixp<TIn, FracBitsIn> In) {
+  Fixp<T, std::max(FracBits, FracBitsIn)> operator-(Fixp<TIn, FracBitsIn> In) {
     assert(sizeof(T) == sizeof(TIn));
-    //=====================================
-    //===== Your Code goes here ===========
-    //=====================================
-    return Fixp<T, std::max(FracBits, FracBitsIn)> (Value - In.Value);
+    if (FracBits > FracBitsIn) {
+      return Fixp<T, std::max(FracBits, FracBitsIn)> (Value - (In.Value << FracBits - FracBitsIn));
+    } else {
+      return Fixp<T, std::max(FracBits, FracBitsIn)> ((Value << FracBits - FracBitsIn) - In.Value);
+    }
   }
 
   /**
@@ -104,12 +106,6 @@ public:
   template <class TIn, TIn FracBitsIn>
   Fixp<T, FracBits + FracBitsIn> operator*(Fixp<TIn, FracBitsIn> In) {
     assert(sizeof(T) == sizeof(TIn));
-    // The wanted behaviour is that the result keeps its accuracy.
-    // This means that the resulting Fixed Point type after the
-    //    multiplication will use more frac bits.
-    //=====================================
-    //===== Your Code goes here ===========
-    //=====================================
     return Fixp<T, FracBits + FracBitsIn> (Value * In.Value);
   }
 
@@ -137,7 +133,7 @@ public:
    * @return true
    * @return false
    */
-  bool const operator==(Fixp In) {
+  bool operator==(Fixp In) const {
     assert(checkTypes(*this, In));
     return this->Value == In.Value;
   }

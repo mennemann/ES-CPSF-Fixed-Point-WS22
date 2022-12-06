@@ -112,6 +112,11 @@ TEST(Positive, Equal) {
   EXPECT_FALSE(A == C);
   EXPECT_FALSE(A == D);
   EXPECT_TRUE(D == C);
+
+  Fixp<int8_t, 3> U(2);
+  Fixp<int8_t, 2> I(2);
+  Fixp<int8_t, 3> O(6);
+  EXPECT_EQ(U+I, O);
 }
 
 TEST(Negative, Equal) {
